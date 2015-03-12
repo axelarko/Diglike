@@ -13,14 +13,10 @@ public class PlayerCharacter : MonoBehaviour {
 	public GameManager manager;
 	public ParticleSystem particle;
 
-	
-	public enum Item{empty,w,e,r,t,y};
-	public Item[] inventory;
-	public int selectedInvetoryItem = 0;
 
 	private int basePower = 500000;
 	private int power;
-	private int baseHealth = 100000; 
+	private int baseHealth = 100000;
 	private int health;
 	// Use this for initialization
 	void Start () 
@@ -35,17 +31,8 @@ public class PlayerCharacter : MonoBehaviour {
 	void Update () 
 	{
 		Moving ();
-		TempUpdate ();
 		if (health <= 0)
 			Death ();
-	}
-	void TempUpdate (){
-		if(Input.GetKeyDown(KeyCode.P)){
-			AddToInvetory(Item.w);
-		}
-		if(Input.GetKeyDown(KeyCode.O)){
-			AddToInvetory(Item.e);
-		}
 	}
 
 	void DigAnimation()
@@ -159,31 +146,6 @@ public class PlayerCharacter : MonoBehaviour {
 		{
 			HealthUpdate(-value);
 		}
-	}
-	public void AddToInvetory(Item itemToAdd){
-		if (!InventoryFull ()) {
-			int spot = 0;
-			foreach (Item i in inventory) {
-				if (i == Item.empty) {
-					inventory[spot] = itemToAdd;
-					return;
-				}
-				else{
-					spot++;
-				}
-			}
-		} 
-		else {
-			inventory[selectedInvetoryItem] = itemToAdd;
-		}
-	}
-	public bool InventoryFull(){
-		foreach (Item i in inventory) {
-			if(i == Item.empty){
-				return false;
-			}
-		}
-		return true;
 	}
 
 	public void HealthUpdate(int value)
