@@ -1,0 +1,31 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class Treasure : Block {
+	private int treasureID;
+
+	private string treasureType;
+	private int value = 0;
+
+
+	public override void Initialize(int floor, int cap)
+	{
+		GetComponent<MeshRenderer>().material.color = Color.magenta;
+		treasureID = Random.Range (floor, cap + 1);
+		if (treasureID == 0)
+			treasureType = "Death Scissors of Certain Breakfast";
+		else if (treasureID == 1)
+			treasureType = "Devious Shovel of Broken Teeth";
+		else if (treasureID == 2)
+			treasureType = "Screaming Screwdriver of Offended Bears";
+		else if (treasureID == 3)
+			treasureType = "Potion";
+			value = 10;
+	}
+
+	public void PickUp(PlayerCharacter player)
+	{
+		player.PickUp (treasureType, value);
+		Destroy (gameObject);
+	}
+}
