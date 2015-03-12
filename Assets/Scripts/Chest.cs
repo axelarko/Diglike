@@ -27,7 +27,7 @@ public class Chest : Block
 		transform.position = basePos;
 		particle = Instantiate (explosion, basePos, Quaternion.identity) as ParticleSystem;
 		particle.startColor = Color.yellow;
-		//Destroy (particle.gameObject, 2f);
+		Destroy (particle.gameObject, 2f);
 		spawner.airSpawn = this.transform.position;
 		spawner.CreateAir (posX, posY);
 		int itemTier = Random.Range (0, 101);

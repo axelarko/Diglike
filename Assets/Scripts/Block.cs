@@ -88,40 +88,44 @@ public class Block : MonoBehaviour {
 		}
 		if (!shaking)
 		this.transform.position = basePos;
-		if ((-spawner.floorLevel)-30 >= level)
+		if ((-spawner.floorLevel)-30 >= level && spawner != null)
 			Destroy(gameObject);
 	}
 	public virtual void Initialize(int rarityFloor, int rarityCap)
 	{
-		itemRate = Mathf.RoundToInt (baseDrop + (100f +level) / 100f);
-		gameObject.GetComponent<MeshRenderer>().enabled = true;
-		gameObject.GetComponent<BoxCollider>().enabled = true;
-		int blockType = Random.Range (rarityFloor, rarityCap);
-		if (blockType < uncommon && blockType > 0) 
+		if (spawner == null)
 		{
-			blockID = 1;
-		 	baseColor = gameObject.GetComponent<Renderer>().material.color = Color.black;
+			spawner = FindObjectOfType<BlockSpawner> ();
 		}
-		else if (blockType < rare && common < blockType) 
-		{
-			blockID = 2;
-			baseColor = gameObject.GetComponent<Renderer>().material.color = Color.grey;
-		}
+			itemRate = Mathf.RoundToInt (baseDrop + (100f +level) / 100f);
+			gameObject.GetComponent<MeshRenderer>().enabled = true;
+			gameObject.GetComponent<BoxCollider>().enabled = true;
+			int blockType = Random.Range (rarityFloor, rarityCap);
+			if (blockType < uncommon && blockType > 0) 
+			{
+				blockID = 1;
+		 		baseColor = gameObject.GetComponent<Renderer>().material.color = Color.black;
+			}
+			else if (blockType < rare && common < blockType) 
+			{
+				blockID = 2;
+				baseColor = gameObject.GetComponent<Renderer>().material.color = Color.grey;
+			}
 		else if (blockType < epic && rare < blockType) 
 		{
 			blockID = 3;
 			baseColor = gameObject.GetComponent<Renderer>().material.color = Color.white;
 		}
-		else if (blockType < legendary && epic < blockType) 
-		{
-			blockID = 4;
-			baseColor = gameObject.GetComponent<Renderer>().material.color = Color.yellow;
-		}
-		else if (legendary < blockType) 
-		{
-			blockID = 4;
-			baseColor = gameObject.GetComponent<Renderer>().material.color = Color.green;
-		}
+			else if (blockType < legendary && epic < blockType) 
+			{
+				blockID = 4;
+				baseColor = gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+			}
+			else if (legendary < blockType) 
+			{
+				blockID = 4;
+				baseColor = gameObject.GetComponent<Renderer>().material.color = Color.green;
+			}
 
 		else if (blockType == 0) 
 		{
@@ -129,9 +133,9 @@ public class Block : MonoBehaviour {
 			gameObject.GetComponent<MeshRenderer>().enabled = false;
 			gameObject.GetComponent<BoxCollider>().enabled = false;
 		}
-		gameObject.name = blockID + " (" + posX + ", " + posY + ")";
-		maxHealth = (level + 1.25f) * 10;
-		health = Mathf.RoundToInt (maxHealth);
+			gameObject.name = blockID + " (" + posX + ", " + posY + ")";
+			maxHealth = (level + 1.25f) * 10;
+			health = Mathf.RoundToInt (maxHealth);
 	}
 
 	public virtual void OnStrike(PlayerCharacter player, int damage)
@@ -179,8 +183,8 @@ public class Block : MonoBehaviour {
 		{
 			Treasure reward;
 			reward = Instantiate (treasure, transform.position,Quaternion.identity) as Treasure;
-			treasure.spawner = spawner;
-			treasure.level = level;
+			reward.spawner = spawner;
+			reward.level = level;
 			// rolls quality
 			reward.Initialize (0, 3);
 		}
