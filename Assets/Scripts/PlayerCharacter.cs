@@ -13,9 +13,12 @@ public class PlayerCharacter : MonoBehaviour {
 	public GameManager manager;
 	public ParticleSystem particle;
 
+<<<<<<< HEAD
 	public enum Item{empty,w,e,r,t,y};
 	public Item[] inventory;
 	public int selectedInvetoryItem = 0;
+=======
+>>>>>>> origin/master
 
 	private int basePower = 500000;
 	private int power;
@@ -34,10 +37,10 @@ public class PlayerCharacter : MonoBehaviour {
 	void Update () 
 	{
 		Moving ();
-		TempUpdate ();
 		if (health <= 0)
 			Death ();
 	}
+<<<<<<< HEAD
 
 	void TempUpdate (){
 		if(Input.GetKeyDown(KeyCode.P)){
@@ -47,6 +50,8 @@ public class PlayerCharacter : MonoBehaviour {
 			AddToInvetory(Item.e);
 		}
 	}
+=======
+>>>>>>> origin/master
 
 	public void AddToInvetory(Item itemToAdd){
 		if (!InventoryFull ()) {

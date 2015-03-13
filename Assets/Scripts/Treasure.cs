@@ -6,7 +6,6 @@ public class Treasure : Block {
 
 	private string treasureType;
 	private int value = 0;
-	private PlayerCharacter.Item item = PlayerCharacter.Item.empty;
 
 
 	public override void Initialize(int floor, int cap)
@@ -20,6 +19,7 @@ public class Treasure : Block {
 		else if (treasureID == 2)
 			treasureType = "Screaming Screwdriver of Offended Bears";
 		else if (treasureID == 3)
+<<<<<<< HEAD
 		{
 			treasureType = "Potion";
 			value = 10;
@@ -28,18 +28,25 @@ public class Treasure : Block {
 		{
 			item = PlayerCharacter.Item.w;
 		}
+=======
+			treasureType = "Potion";
+			value = 10;
+>>>>>>> origin/master
 	}
 
 	public void PickUp(PlayerCharacter player)
 	{
 		player.PickUp (treasureType, value);
 		Destroy (gameObject);
+<<<<<<< HEAD
 	if (treasureID < 100) {
 		player.PickUp (treasureType, value);
 		Destroy (gameObject);
 	} 
 	else {
 		player.AddToInvetory(item);
+=======
+>>>>>>> origin/master
 	}
 }
 }
