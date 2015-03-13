@@ -115,11 +115,10 @@ public class HunterEnemy : MonoBehaviour {
 
 		savedPos = transform.position;
 		transform.position = pos;
+		countDown -= 0.1f/(0.1f*50);
 		if (hasTail)
 		{
 			tail.Follow (savedPos);
-			tail.countDown -= 0.1f/(0.1f*50);
-
 		}
 	}
 

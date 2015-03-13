@@ -192,11 +192,15 @@ public class Block : MonoBehaviour {
 	}
 
 	public void Destroyed()
-
 	{
-		spawner.airSpawn = this.transform.position;
-		spawner.CreateAir (posX, posY);
-		Destroy (gameObject);
+			transform.position = basePos;
+			ParticleSystem particle;
+			particle = Instantiate (explosion, transform.position, Quaternion.identity) as ParticleSystem;
+			particle.startColor = baseColor;
+			Destroy (particle.gameObject, 2f);
+			spawner.airSpawn = this.transform.position;
+			spawner.CreateAir (posX, posY);
+			Destroy (gameObject);
 	}
 
 
