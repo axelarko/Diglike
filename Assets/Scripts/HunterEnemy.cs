@@ -11,10 +11,12 @@ public class HunterEnemy : MonoBehaviour {
 	public TailEnemy tail;
 	public Vector3 savedPos;
 	public bool hasTail;
+	public AudioClip dig;
 
 	// Use this for initialization
 	void Start () {
 
+	
 		player = FindObjectOfType<PlayerCharacter>();
 
 
@@ -59,6 +61,7 @@ public class HunterEnemy : MonoBehaviour {
 				else
 
 					transform.position = transform.position + new Vector3 (1,0,0);
+
 			}
 		}
 		else if (player.transform.position.y < gameObject.transform.position.y)
@@ -83,6 +86,8 @@ public class HunterEnemy : MonoBehaviour {
 			else
 
 				transform.position = transform.position + new Vector3 (0,1,0);
+
+
 		}
 
 		countDown -= 0.1f/(0.1f*50);
@@ -93,21 +98,28 @@ public class HunterEnemy : MonoBehaviour {
 	{
 		if (obj.tag.Equals("Block"))
 		{
+
+			AudioSource.PlayClipAtPoint (dig, new Vector3 (5, 1, 2));
 			block = obj.GetComponent<Block>();
 			transform.position = block.transform.position;
 			block.Destroyed();
 		}
 		else if (obj.tag.Equals("Treasure"))
 		{
+
 			treasure = obj.GetComponent<Treasure>();
 			transform.position = treasure.transform.position;
 			treasure.Destroyed();
+
 		}
 		else if (obj.tag.Equals("Player"))
 		{
+
 			player.HealthUpdate(100000000);
 
 		}
+
+
 	}
 
 	public void Follow(Vector3 pos)

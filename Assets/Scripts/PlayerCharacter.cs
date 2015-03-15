@@ -9,10 +9,11 @@ public class PlayerCharacter : MonoBehaviour {
 	public bool falling = false;
 	public int level;
 
+
 	public BlockSpawner spawner;
 	public GameManager manager;
 	public ParticleSystem particle;
-
+	public AudioClip dead;
 
 	public enum Item{empty,w,e,r,t,y};
 	public Item[] inventory;
@@ -85,7 +86,9 @@ public class PlayerCharacter : MonoBehaviour {
 
 	void Death()
 	{
+
 		manager.GameOver ();
+		AudioSource.PlayClipAtPoint (dead, new Vector3 (5, 1, 2));
 		ParticleSystem blood;
 		blood = Instantiate (particle, transform.position, Quaternion.identity) as ParticleSystem;
 		blood.startColor = Color.red;

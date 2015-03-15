@@ -2,6 +2,12 @@
 using System.Collections;
 
 public class Block : MonoBehaviour {
+
+	public AudioClip earth;
+	public AudioClip stone1;
+	public AudioClip stone2;
+	public AudioClip metal;
+
 	public int health;
 	public float maxHealth;
 	public int armor;
@@ -140,6 +146,13 @@ public class Block : MonoBehaviour {
 
 	public virtual void OnStrike(PlayerCharacter player, int damage)
 	{
+		//sound
+		if (blockID == 1) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
+		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone1, new Vector3 (5, 1, 2));}
+		if (blockID == 3) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
+		if (blockID == 4) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
+
+
 		shaking = true;
 		shakeTime = 0.25f;
 		if (!flashing)
