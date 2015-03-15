@@ -1,0 +1,140 @@
+fileFormatVersion: 2
+guid: 31a67d80406433d4eb46f8bcc6577fcd
+timeCreated: 1426196341
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: potato_low2:jaw
+    100004: potato_low2:joint1
+    100006: potato_low2:joint2
+    100008: potato_low2:joint3
+    100010: potato_low2:joint4
+    100012: potato_low2:joint6
+    100014: potato_low2:joint7
+    100016: potato_low2:joint8
+    100018: potato_low2:joint9
+    100020: potato_low5:Group1
+    400000: //RootNode
+    400002: potato_low2:jaw
+    400004: potato_low2:joint1
+    400006: potato_low2:joint2
+    400008: potato_low2:joint3
+    400010: potato_low2:joint4
+    400012: potato_low2:joint6
+    400014: potato_low2:joint7
+    400016: potato_low2:joint8
+    400018: potato_low2:joint9
+    400020: potato_low5:Group1
+    4300000: potato_low5:Group1
+    7400000: Take 001
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: potato_low5:Group1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 120
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 1
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: potato_low2:jaw
+        weight: 1
+      - path: potato_low2:jaw/potato_low2:joint1
+        weight: 1
+      - path: potato_low2:jaw/potato_low2:joint1/potato_low2:joint2
+        weight: 1
+      - path: potato_low2:jaw/potato_low2:joint3
+        weight: 1
+      - path: potato_low2:jaw/potato_low2:joint3/potato_low2:joint4
+        weight: 1
+      - path: potato_low2:jaw/potato_low2:joint7
+        weight: 1
+      - path: potato_low2:jaw/potato_low2:joint7/potato_low2:joint8
+        weight: 1
+      - path: potato_low2:jaw/potato_low2:joint9
+        weight: 1
+      - path: potato_low2:jaw/potato_low2:joint9/potato_low2:joint6
+        weight: 1
+      - path: potato_low5:Group1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
