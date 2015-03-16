@@ -4,9 +4,15 @@ using System.Collections;
 public class Block : MonoBehaviour {
 
 	public AudioClip earth;
+	public AudioClip earthbreak;
 	public AudioClip stone1;
+	public AudioClip stone1break;
 	public AudioClip stone2;
+	public AudioClip stone2break;
 	public AudioClip metal;
+	public AudioClip metalbreak;
+	public AudioClip crit;
+	public AudioClip fail;
 
 	public int health;
 	public float maxHealth;
@@ -183,20 +189,24 @@ public class Block : MonoBehaviour {
 	}
 	protected void FailSound()
 	{
-
+		AudioSource.PlayClipAtPoint (fail, new Vector3 (5, 1, 2));
 	}
 
 	protected void DigSound()
 	{
-
+		if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
+		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, new Vector3 (5, 1, 2));}
+		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
+		if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
 	}
 	protected void CritSound()
 	{
-
+		AudioSource.PlayClipAtPoint (crit, new Vector3 (5, 1, 2));
 	}
 
 	protected void BreakSound()
 	{
+
 		if (earth != null && stone1 != null && stone2 != null && metal != null)
 		{
 			if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
@@ -204,6 +214,7 @@ public class Block : MonoBehaviour {
 			if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
 			if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
 		}
+
 	}
 
 	protected void PickUpSound()
