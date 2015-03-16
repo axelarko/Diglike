@@ -146,39 +146,66 @@ public class Block : MonoBehaviour {
 
 	public virtual void OnStrike(PlayerCharacter player, int damage)
 	{
-		if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
-		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, new Vector3 (5, 1, 2));}
-		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
-		if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
-
-
 		shaking = true;
 		shakeTime = 0.25f;
 		if (!flashing)
 		{
 			if (critFlash)
 			{
+				CritSound ();
 				shakeForce = 2;
 				health -= damage*2;
-				//critsound
 			}
 			else
-			health -= damage;
-			shakeForce = 1;
-			player.HealthUpdate(playerdmg);
-			//miningsound
+			{
+				health -= damage;
+				shakeForce = 1;
+				player.HealthUpdate(playerdmg);
+			}
 
-		if (health <= 0)
-		{
-			MinedOut ();
-		}
-		Flash ();
+			if (health <= 0)
+			{
+				BreakSound ();
+				MinedOut ();
+			}
+			else
+			{
+				DigSound();
+				Flash ();
+			}
 		}
 		else
 		{
+			FailSound ();
 			int dmg = playerdmg * 2;
 			player.HealthUpdate	 (dmg);
 		}
+	}
+	protected void FailSound()
+	{
+
+	}
+
+	protected void DigSound()
+	{
+
+	}
+	protected void CritSound()
+	{
+
+	}
+
+	protected void BreakSound()
+	{
+		if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
+		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, new Vector3 (5, 1, 2));}
+		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
+		if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
+	}
+
+	protected void PickUpSound()
+	{
+
 	}
 
 	protected virtual void MinedOut()
@@ -200,19 +227,21 @@ public class Block : MonoBehaviour {
 			// rolls quality
 			reward.Initialize (0, 3);
 		}
+		BreakSound ();
 		Destroy (gameObject);
 	}
 
 	public void Destroyed()
 	{
-			transform.position = basePos;
-			ParticleSystem particle;
-			particle = Instantiate (explosion, transform.position, Quaternion.identity) as ParticleSystem;
-			particle.startColor = baseColor;
-			Destroy (particle.gameObject, 2f);
-			spawner.airSpawn = this.transform.position;
-			spawner.CreateAir (posX, posY);
-			Destroy (gameObject);
+		BreakSound ();
+		transform.position = basePos;
+		ParticleSystem particle;
+		particle = Instantiate (explosion, transform.position, Quaternion.identity) as ParticleSystem;
+		particle.startColor = baseColor;
+		Destroy (particle.gameObject, 2f);
+		spawner.airSpawn = this.transform.position;
+		spawner.CreateAir (posX, posY);
+		Destroy (gameObject);
 	}
 
 
