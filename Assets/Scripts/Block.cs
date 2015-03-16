@@ -146,11 +146,10 @@ public class Block : MonoBehaviour {
 
 	public virtual void OnStrike(PlayerCharacter player, int damage)
 	{
-		//sound
-		if (blockID == 1) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
-		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone1, new Vector3 (5, 1, 2));}
-		if (blockID == 3) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
-		if (blockID == 4) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
+		if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
+		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, new Vector3 (5, 1, 2));}
+		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
+		if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
 
 
 		shaking = true;

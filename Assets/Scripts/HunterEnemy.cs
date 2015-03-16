@@ -12,6 +12,7 @@ public class HunterEnemy : MonoBehaviour {
 	public Vector3 savedPos;
 	public bool hasTail;
 	public AudioClip dig;
+	public AudioClip roar;
 
 	// Use this for initialization
 	void Start () {
@@ -48,7 +49,10 @@ public class HunterEnemy : MonoBehaviour {
 				CheckTarget(hit.transform.gameObject);
 			}
 			else
+			{
+				MoveSound();
 				transform.position = transform.position + new Vector3 (-1,0,0);
+			}
 		}
 		else if (player.transform.position.x > gameObject.transform.position.x)
 		{
@@ -59,8 +63,10 @@ public class HunterEnemy : MonoBehaviour {
 					CheckTarget(hit.transform.gameObject);
 				}
 				else
-
+				{
+					MoveSound();
 					transform.position = transform.position + new Vector3 (1,0,0);
+				}
 
 			}
 		}
@@ -72,8 +78,10 @@ public class HunterEnemy : MonoBehaviour {
 				CheckTarget(hit.transform.gameObject);
 			}
 			else
-
+			{
+				MoveSound();
 				transform.position = transform.position + new Vector3 (0,0-1,0);
+			}
 		}
 
 		else if (player.transform.position.y > gameObject.transform.position.y)
@@ -84,8 +92,10 @@ public class HunterEnemy : MonoBehaviour {
 				CheckTarget(hit.transform.gameObject);
 			}
 			else
-
+			{
 				transform.position = transform.position + new Vector3 (0,1,0);
+				MoveSound();
+			}
 
 
 		}
@@ -118,7 +128,7 @@ public class HunterEnemy : MonoBehaviour {
 			player.HealthUpdate(100000000);
 
 		}
-
+	
 
 	}
 
@@ -134,4 +144,8 @@ public class HunterEnemy : MonoBehaviour {
 		}
 	}
 
+	void MoveSound()
+	{
+		AudioSource.PlayClipAtPoint (roar, savedPos);
+	}
 }
