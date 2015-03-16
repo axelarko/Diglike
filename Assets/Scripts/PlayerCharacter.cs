@@ -36,6 +36,7 @@ public class PlayerCharacter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		TempUpdate ();
 		Moving ();
 		if (health <= 0)
 			Death ();

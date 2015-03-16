@@ -48,11 +48,13 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Block.cs" />
      <Compile Include="Assets\Scripts\BlockSpawner.cs" />
+     <Compile Include="Assets\Scripts\Boss.cs" />
      <Compile Include="Assets\Scripts\Chest.cs" />
      <Compile Include="Assets\Scripts\Equipment.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\HunterEnemy.cs" />
      <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
+     <Compile Include="Assets\Scripts\SwapperEnemy.cs" />
      <Compile Include="Assets\Scripts\TailEnemy.cs" />
      <Compile Include="Assets\Scripts\Treasure.cs" />
  <Reference Include="UnityEngine.UI">
