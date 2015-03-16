@@ -50,9 +50,10 @@
      <Compile Include="Assets\Scripts\Block.cs" />
      <Compile Include="Assets\Scripts\BlockSpawner.cs" />
      <Compile Include="Assets\Scripts\Chest.cs" />
-     <Compile Include="Assets\Scripts\EnemyMovement.cs" />
      <Compile Include="Assets\Scripts\Equipment.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Hermans fail script\CountDownTimer.cs" />
+     <Compile Include="Assets\Scripts\Hermans fail script\EnemyMovement.cs" />
      <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
      <Compile Include="Assets\Scripts\Treasure.cs" />
  <Reference Include="UnityEngine.UI">
