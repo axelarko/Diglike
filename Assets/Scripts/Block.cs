@@ -146,7 +146,7 @@ public class Block : MonoBehaviour {
 			gameObject.GetComponent<BoxCollider>().enabled = false;
 		}
 			gameObject.name = blockID + " (" + posX + ", " + posY + ")";
-			maxHealth = (level + 1.25f) * 10;
+			maxHealth = (level + 1.25f) * 1;
 			health = Mathf.RoundToInt (maxHealth);
 	}
 
@@ -173,6 +173,7 @@ public class Block : MonoBehaviour {
 			{
 				BreakSound ();
 				MinedOut ();
+				MovePlayerHere(player);
 			}
 			else
 			{
@@ -262,10 +263,10 @@ public class Block : MonoBehaviour {
 
 	protected virtual void Flash()
 	{
-		Invoke ("CriticalFlash", flashTime);
+		/*Invoke ("CriticalFlash", flashTime);
 		timeInterval = flashTime;
 		if (!flashing)
-		flashing = !flashing;
+		flashing = !flashing;*/
 	}
 
 	protected void CriticalFlash()
@@ -275,4 +276,27 @@ public class Block : MonoBehaviour {
 		critFlash = !critFlash;
 	}
 
+	public void Pulse(string color)
+	{
+		if (color == "green")
+		{
+			critInterval = critTime;
+			if (!critFlash)
+			critFlash = !critFlash;
+		}
+		else
+		{
+			timeInterval = flashTime;
+			if (!flashing)
+			flashing = !flashing;
+		}
+	}
+	void MovePlayerHere(PlayerCharacter player)
+	{
+		if (player.transform.position.y == gameObject.transform.position.y + 1f) 
+		{
+			spawner.LevelUp(player.level+1);
+		}
+		player.transform.position = gameObject.transform.position;
+	}
 }

@@ -20,10 +20,14 @@ public class PlayerCharacter : MonoBehaviour {
 	public int selectedInvetoryItem = 0;
 
 
-	private int basePower = 500000;
+	private int basePower = 10;
 	private int power;
 	private int baseHealth = 100000;
 	private int health;
+
+	private float beat;
+	public int pulse;
+	private bool canDig = false;
 	// Use this for initialization
 	void Start () 
 	{
@@ -36,10 +40,13 @@ public class PlayerCharacter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		BeatPulse ();
 		TempUpdate ();
 		Moving ();
 		if (health <= 0)
+		{
 			Death ();
+		}
 	}
 
 
@@ -162,7 +169,11 @@ public class PlayerCharacter : MonoBehaviour {
 
 	void Digging(Block block)
 	{
-		block.OnStrike(this, power);
+		if (canDig) 
+		{
+			block.OnStrike (this, power);
+			canDig = !canDig;
+		}
 	}
 
 	public void Falling()
@@ -200,4 +211,63 @@ public class PlayerCharacter : MonoBehaviour {
 		health -= value;
 		manager.PlayerHealth(health);
 	}
+
+	void BeatPulse()
+	{
+		beat -= Time.deltaTime;
+		if (beat <= 0) 
+		{
+			if (!canDig)
+			{
+				canDig = !canDig;
+			}
+			Ray ray;
+			Ray ray1;
+			Ray ray2;
+			ray = new Ray(transform.position,Vector3.down);
+			ray1 = new Ray(transform.position,Vector3.left);
+			ray2 = new Ray(transform.position,Vector3.right);
+			if(Physics.Raycast(ray, out hit, 1))
+			{
+
+				if (pulse >= 0)
+				{
+					hit.transform.gameObject.GetComponent<Block>().Pulse("green");
+				}
+				else
+				{
+					hit.transform.gameObject.GetComponent<Block>().Pulse("red");
+				}
+			}
+			if(Physics.Raycast(ray1, out hit, 1))
+			{
+				if (pulse >= 0)
+				{
+					hit.transform.gameObject.GetComponent<Block>().Pulse("green");
+				}
+				else
+				{
+					hit.transform.gameObject.GetComponent<Block>().Pulse("red");
+				}
+			}
+			if(Physics.Raycast(ray2, out hit, 1))
+			{
+				if (pulse >= 0)
+				{
+					hit.transform.gameObject.GetComponent<Block>().Pulse("green");
+				}
+				else
+				{
+					hit.transform.gameObject.GetComponent<Block>().Pulse("red");
+				}
+			}
+			pulse -=1;
+			beat = 0.47625f;
+			if (pulse < -1)
+			{
+				pulse = 2;
+			}
+		}
+	}
+
 }

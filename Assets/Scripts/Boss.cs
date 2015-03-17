@@ -8,10 +8,12 @@ public class Boss : MonoBehaviour {
 	int moveCount;
 	bool moving;
 	bool zigzag;
+	public bool rising;
 	public bool left = true;
 	public Collider[] hitColliders;
 	void Start () 
 	{
+		moving = true;
 		Invoke ("WallOff", 0f);
 		player = FindObjectOfType<PlayerCharacter>();
 
@@ -22,16 +24,25 @@ public class Boss : MonoBehaviour {
 	{
 		DestroyBlock ();
 		if (Input.GetKeyDown (KeyCode.Space))
+		{
 			zigzag = !zigzag;
+		}
 		moveTime -= Time.deltaTime;
-		if (moveTime <= 0 && left)
+		if (moveTime <= 0 && left && moving)
 		{
 			Move();
 			moveTime = 0.01f;
 		}
-		else if (moveTime <= 0 && !left)
+		else if (moveTime <= 0 && !left && moving)
+		{
 			MoveOther();
 			moveTime = 0.01f;
+		}
+		else if (rising && moveTime <= 0) //(moveTime <= 0 && rising && moving)
+		{
+			PlayerHeight ();
+			moveTime = 0.1f;
+		}
 	}
 
 	void WallOff()
@@ -40,8 +51,9 @@ public class Boss : MonoBehaviour {
 		wallPosition = player.transform.position + new Vector3(-2,-08,0);
 		{
 			gameObject.transform.position = wallPosition;
-			//moveCount = 200;
 		}
+		rising = !rising;
+		moveCount = 100;
 	}
 
 	void Move()
@@ -83,21 +95,49 @@ public class Boss : MonoBehaviour {
 				left = !left;
 			}
 		}
-		//MoveOther();
 	}
 
 	void DestroyBlock()
 	{
 		 {
-			//Block[] blockArray;
 			hitColliders = Physics.OverlapSphere(transform.position, 0f);
 			foreach (Collider coll in hitColliders)
-				if (coll.gameObject.tag == "Block")
-					coll.gameObject.GetComponent<Block>().Destroyed();
-
-
-				
-
+			if (coll.gameObject.tag == "Block")
+			{
+				coll.gameObject.GetComponent<Block>().Destroyed();
+			}
 		}
 	}
+
+	void PlayerHeight()
+	{
+		if (player != null)
+		{
+			float playerHeight = player.transform.position.y;
+			float difference = playerHeight + 10;
+			RiseUp (difference);
+		}
+		else 
+		{
+			Debug.Log ("No player");
+		}
+	}
+
+	void RiseUp(float difference)
+	{
+		Debug.Log (this.transform.position.y + difference);
+		if (difference > gameObject.transform.position.y)
+		transform.position = transform.position + new Vector3 (0, 1, 0);
+	}
+
+	void LocatePlayer()
+	{
+
+	}
+
+	void CrashDown()
+	{
+
+	}
+
 }
