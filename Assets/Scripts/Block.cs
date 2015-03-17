@@ -13,6 +13,8 @@ public class Block : MonoBehaviour {
 	public AudioClip metalbreak;
 	public AudioClip crit;
 	public AudioClip fail;
+	public float volume = 0.5f;
+
 
 	public int health;
 	public float maxHealth;
@@ -46,7 +48,8 @@ public class Block : MonoBehaviour {
 
 	public int baseDrop = 1;
 	public int itemRate;
-	
+
+
 
 	//effects for flashing
 	public float timeInterval;
@@ -63,6 +66,7 @@ public class Block : MonoBehaviour {
 	public float critTime;
 	protected void Start () 
 	{
+
 		playerdmg = 1;
 		basePos = this.transform.position;
 	}
@@ -195,10 +199,10 @@ public class Block : MonoBehaviour {
 
 	protected void DigSound()
 	{
-		if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
-		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, new Vector3 (5, 1, 2));}
-		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
-		if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
+		if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, gameObject.transform.position, volume);}
+		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, gameObject.transform.position, volume);}
+		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, gameObject.transform.position, volume);}
+		if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, gameObject.transform.position, volume);}
 	}
 	protected void CritSound()
 	{
@@ -208,6 +212,7 @@ public class Block : MonoBehaviour {
 	protected void BreakSound()
 	{
 
+
 		if (earth != null && stone1 != null && stone2 != null && metal != null)
 		{
 			if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
@@ -215,6 +220,7 @@ public class Block : MonoBehaviour {
 			if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
 			if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
 		}
+
 
 	}
 

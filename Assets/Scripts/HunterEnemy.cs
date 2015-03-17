@@ -13,6 +13,7 @@ public class HunterEnemy : MonoBehaviour {
 	public bool hasTail;
 	public AudioClip dig;
 	public AudioClip roar;
+	public AudioSource source;
 
 	// Use this for initialization
 	void Start () {
@@ -108,8 +109,9 @@ public class HunterEnemy : MonoBehaviour {
 	{
 		if (obj.tag.Equals("Block"))
 		{
-
-			AudioSource.PlayClipAtPoint (dig, new Vector3 (5, 1, 2));
+			source.clip = dig;
+			source.Play();
+			//AudioSource.PlayClipAtPoint (dig, transform.position);
 			block = obj.GetComponent<Block>();
 			transform.position = block.transform.position;
 			block.Destroyed();
@@ -146,6 +148,9 @@ public class HunterEnemy : MonoBehaviour {
 
 	void MoveSound()
 	{
-		AudioSource.PlayClipAtPoint (roar, savedPos);
+
+		source.clip = roar;
+		source.Play();
+		//AudioSource.PlayClipAtPoint (roar, savedPos);
 	}
 }
