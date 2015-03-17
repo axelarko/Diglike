@@ -13,7 +13,7 @@ public class BadPotato : MonoBehaviour {
 	public AudioClip blirArg;
 	public AudioClip växer;
 	public AudioClip Dör;
-
+	public ParticleSystem explosion;
 
 	// Use this for initialization
 	void Start () {

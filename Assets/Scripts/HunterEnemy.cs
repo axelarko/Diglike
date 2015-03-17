@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class HunterEnemy : MonoBehaviour {
-	private PlayerCharacter player;
+	private GameObject player;
 	protected float moveTime;
 	private Block block;
 	private Treasure treasure;
@@ -13,13 +13,27 @@ public class HunterEnemy : MonoBehaviour {
 	public bool hasTail;
 	public AudioClip dig;
 	public AudioClip roar;
+	public AudioClip hunterDeath;
 	public AudioSource source;
+	public ParticleSystem explosion;
 
 	// Use this for initialization
+
+	void OnTriggerEnter(Collider other) 
+	{
+		
+		//Destroy(other.gameObject);
+		
+		if (other.CompareTag ("Potato")) {
+			player = other.gameObject;
+		}
+
+	}
 	void Start () {
 
 	
-		player = FindObjectOfType<PlayerCharacter>();
+		player = GameObject.FindGameObjectWithTag ("Player");
+
 
 
 	}
@@ -126,11 +140,28 @@ public class HunterEnemy : MonoBehaviour {
 		}
 		else if (obj.tag.Equals("Player"))
 		{
+			player.GetComponent<PlayerCharacter> ().HealthUpdate(9999999);
 
-			player.HealthUpdate(100000000);
 
 		}
 	
+		else if (obj.tag.Equals("Potato"))
+		{
+			
+			//play animation
+			// play sound
+			source.clip = hunterDeath;
+			source.Play();
+
+			ParticleSystem particle;
+			particle = Instantiate (explosion, transform.position, Quaternion.identity) as ParticleSystem;
+			particle.startColor = Color.green;
+			Destroy (particle.gameObject, 2f);
+
+
+			Destroy(gameObject);
+			
+		}
 
 	}
 
