@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\Equipment.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\HunterEnemy.cs" />
+     <Compile Include="Assets\Scripts\MoleRat.cs" />
      <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
      <Compile Include="Assets\Scripts\TailEnemy.cs" />
      <Compile Include="Assets\Scripts\Treasure.cs" />
