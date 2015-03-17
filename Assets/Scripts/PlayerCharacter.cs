@@ -229,7 +229,6 @@ public class PlayerCharacter : MonoBehaviour {
 			ray2 = new Ray(transform.position,Vector3.right);
 			if(Physics.Raycast(ray, out hit, 1))
 			{
-
 				if (pulse >= 0)
 				{
 					hit.transform.gameObject.GetComponent<Block>().Pulse("green");
