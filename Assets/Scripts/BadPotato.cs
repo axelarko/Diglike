@@ -8,6 +8,13 @@ public class BadPotato : MonoBehaviour {
 	public Vector3 position;
 	public float sphereradius = 5;
 	public float growthscale = 0.1F;
+
+	public AudioSource source;
+	public AudioClip blirArg;
+	public AudioClip växer;
+	public AudioClip Dör;
+
+
 	// Use this for initialization
 	void Start () {
 
@@ -41,6 +48,12 @@ public class BadPotato : MonoBehaviour {
 	public void Anger()
 	{
 		transform.localScale += new Vector3(growthscale, growthscale, growthscale);
+
+		if (howBig % 20 == 1) {
+			Debug.Log(howBig);
+			source.clip = växer;
+			source.Play ();
+		}
 		//Collider[] collidersHit = Physics.OverlapSphere (transform.position, sphereradius*growthscale);
 
    
