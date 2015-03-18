@@ -10,13 +10,17 @@ public class BlockSpawner : MonoBehaviour {
 	public int floorLevel;
 	public int maxRarity;
 	public int minRarity;
-
+	public GameObject MoleRat;
 
 
 
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log (" miku 120 bpm ");
+		Instantiate (MoleRat, (spawnPoint + new Vector3 (0, 40, 0)), Quaternion.identity);
+
+
 		//block = Resources.Load ("Prefabs/Block") as Block;
 
 

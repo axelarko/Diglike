@@ -33,7 +33,7 @@ public class MoleRat : MonoBehaviour {
 		if (moveTime <= 0)
 		{
 			Hunt ();
-			tail.Follow (savedPos);
+			//tail.Follow (savedPos);
 		}
 
 	}
@@ -56,7 +56,7 @@ public class MoleRat : MonoBehaviour {
 				transform.position = transform.position + new Vector3 (-1,0,0);
 			}
 		}
-		 if (player.transform.position.x > gameObject.transform.position.x)
+		 if (player != null && player.transform.position.x > gameObject.transform.position.x)
 		{
 			{
 				Ray ray = new Ray(transform.position, Vector3.right);
@@ -72,7 +72,7 @@ public class MoleRat : MonoBehaviour {
 
 			}
 		}
-		 if (player.transform.position.y < gameObject.transform.position.y)
+		if (player != null && player.transform.position.y < gameObject.transform.position.y)
 		{
 			Ray ray = new Ray(transform.position, Vector3.down);
 			if(Physics.Raycast(ray, out hit, 1))
@@ -86,7 +86,7 @@ public class MoleRat : MonoBehaviour {
 			}
 		}
 
-		 if (player.transform.position.y > gameObject.transform.position.y)
+		if (player != null && player.transform.position.y > gameObject.transform.position.y)
 		{
 			Ray ray = new Ray(transform.position, Vector3.up);
 			if(Physics.Raycast(ray, out hit, 1))
@@ -135,6 +135,22 @@ public class MoleRat : MonoBehaviour {
 
 	}
 
+	void OnTriggerEnter(Collider other) 
+	{
+		
+		//Destroy(other.gameObject);
+		
+		if (other.CompareTag ("Block"))  {
+			other.GetComponent<Block> ().Destroyed ();
+		}
+		
+		if (other.CompareTag ("Player")) {
+			other.GetComponent<PlayerCharacter> ().HealthUpdate(9999999);
+		}
+		
+	}
+
+
 	public void Follow(Vector3 pos)
 	{
 
@@ -150,8 +166,8 @@ public class MoleRat : MonoBehaviour {
 	void MoveSound()
 	{
 
-//		source.clip = roar;
-//		source.Play();
+		source.clip = roar;
+	source.Play();
 		//AudioSource.PlayClipAtPoint (roar, savedPos);
 	}
 }

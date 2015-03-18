@@ -39,7 +39,7 @@ public class MotherWorm : MonoBehaviour {
 		}
 		
 		// Update is called once per frame
-		void Update () 
+		void FixedUpdate () 
 		{
 		if (dorment == false) {
 			DestroyBlock ();
@@ -49,13 +49,13 @@ public class MotherWorm : MonoBehaviour {
 			moveTime -= Time.deltaTime;
 			if (moveTime <= 0 && left && moving) {
 				Move ();
-				moveTime = 0.01f;
+				moveTime = 0.05f;
 			} else if (moveTime <= 0 && !left && moving) {
 				MoveOther ();
-				moveTime = 0.01f;
+				moveTime = 0.05f;
 			} else if (rising && moveTime <= 0) { //(moveTime <= 0 && rising && moving)
 				PlayerHeight ();
-				moveTime = 0.1f;
+				moveTime = 0.05f;
 			}
 		}
 		}
@@ -84,15 +84,15 @@ public class MotherWorm : MonoBehaviour {
 		}
 
 		digDirection = direction * -1;
-
+		int stepdown = Random.Range (0, 3);
 		Vector3 wallPosition;
 			
-		wallPosition = player.transform.position + new Vector3(30 * (float)direction  ,-01,0);
+		wallPosition = player.transform.position + new Vector3(30 * (float)direction  ,-1*(float)stepdown  ,0);
 			{
 				gameObject.transform.position = wallPosition;
 			}
 			rising = !rising;
-			moveCount = 100;
+			moveCount = 50;
 		}
 		
 		void Move()
@@ -100,7 +100,7 @@ public class MotherWorm : MonoBehaviour {
 			moving = true;
 			if (moving && moveCount > 0) {
 				
-			GameObject goblock = Instantiate(blockSpawn,  (gameObject.transform.position - new Vector3(8f * (float)digDirection , 0f, 0f)),transform.rotation) as GameObject;
+			GameObject goblock = Instantiate(blockSpawn,  (gameObject.transform.position - new Vector3(6f * (float)digDirection , 0f, 0f)),transform.rotation) as GameObject;
 
 			Block goScript = goblock.GetComponent<Block> ();
 
@@ -122,7 +122,7 @@ public class MotherWorm : MonoBehaviour {
 			{
 				
 				moving = false;
-				moveCount = 100;
+				moveCount = 50;
 				if (zigzag)
 				{
 					transform.position = transform.position + (new Vector3 (0, 1, 0));
@@ -143,7 +143,7 @@ public class MotherWorm : MonoBehaviour {
 			{
 				moving = false;
 				
-				moveCount = 100;
+				moveCount = 50;
 				if (zigzag)
 				{
 					transform.position = transform.position + (new Vector3 (0, 1, 0));
