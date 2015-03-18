@@ -14,8 +14,8 @@ public class Block : MonoBehaviour {
 	public AudioClip crit;
 	public AudioClip fail;
 	public float volume = 0.5f;
-
-
+	public GameObject MotherWormPrefab;
+	private GameObject go;
 	public int health;
 	public float maxHealth;
 	public int armor;
@@ -282,6 +282,24 @@ public class Block : MonoBehaviour {
 		critFlash = !critFlash;
 	}
 
+	public void riskOfWorm()
+	{
+		int wormbingo = Random.Range (0, 15);
+		if (wormbingo == 1) 
+		{
+			Debug.Log("Bingo");
+
+			if (go  != null)
+			{ 
+				Destroy(go);
+
+			}
+
+		  go = Instantiate(MotherWormPrefab, new Vector3 (-99f, 112f, 99f),transform.rotation) as GameObject;
+			go.GetComponent<MotherWorm> ().Bingo( gameObject.transform.position);
+		}
+	}
+
 	public void Pulse(string color)
 	{
 		if (color == "green")
@@ -304,5 +322,6 @@ public class Block : MonoBehaviour {
 			spawner.LevelUp(player.level+1);
 		}
 		player.transform.position = gameObject.transform.position;
+		riskOfWorm ();
 	}
 }

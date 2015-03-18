@@ -9,6 +9,7 @@ public class BadPotato : MonoBehaviour {
 	public float sphereradius = 5;
 	public float growthscale = 0.1F;
 
+
 	public AudioSource source;
 	public AudioClip blirArg;
 	public AudioClip växer;
@@ -35,11 +36,11 @@ public class BadPotato : MonoBehaviour {
 
 		//Destroy(other.gameObject);
 
-		if (other.CompareTag ("Block")) {
+		if (other.CompareTag ("Block") && angry) {
 			other.GetComponent<Block> ().Destroyed ();
 		}
 	
-		if (other.CompareTag ("Player")) {
+		if (other.CompareTag ("Player") && angry) {
 			other.GetComponent<PlayerCharacter> ().HealthUpdate(9999999);
 		}
 

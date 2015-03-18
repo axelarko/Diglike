@@ -43,6 +43,7 @@ public class Boss : MonoBehaviour {
 			PlayerHeight ();
 			moveTime = 0.1f;
 		}
+
 	}
 
 	void WallOff()
@@ -54,6 +55,7 @@ public class Boss : MonoBehaviour {
 		}
 		rising = !rising;
 		moveCount = 100;
+		Destroy(gameObject,20f);
 	}
 
 	void Move()

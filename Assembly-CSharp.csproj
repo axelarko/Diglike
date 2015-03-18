@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\HunterEnemy.cs" />
      <Compile Include="Assets\Scripts\MoleRat.cs" />
+     <Compile Include="Assets\Scripts\MotherWorm.cs" />
      <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
      <Compile Include="Assets\Scripts\SwapperEnemy.cs" />
      <Compile Include="Assets\Scripts\TailEnemy.cs" />

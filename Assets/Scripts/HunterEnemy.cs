@@ -46,7 +46,9 @@ public class HunterEnemy : MonoBehaviour {
 		if (moveTime <= 0)
 		{
 			Hunt ();
-			tail.Follow (savedPos);
+			if (hasTail)
+			{tail.Follow (savedPos);}
+
 		}
 
 	}
@@ -65,6 +67,7 @@ public class HunterEnemy : MonoBehaviour {
 			}
 			else
 			{
+				gameObject.transform.rotation = Quaternion.Euler(0f,180f,0f);
 				MoveSound();
 				transform.position = transform.position + new Vector3 (-1,0,0);
 			}
@@ -79,6 +82,7 @@ public class HunterEnemy : MonoBehaviour {
 				}
 				else
 				{
+					gameObject.transform.rotation = Quaternion.Euler(0f,-360f,0f);
 					MoveSound();
 					transform.position = transform.position + new Vector3 (1,0,0);
 				}
@@ -94,13 +98,16 @@ public class HunterEnemy : MonoBehaviour {
 			}
 			else
 			{
+				gameObject.transform.rotation = Quaternion.Euler(0f,-360f,-99f);
 				MoveSound();
 				transform.position = transform.position + new Vector3 (0,0-1,0);
+
 			}
 		}
 
 		else if (player.transform.position.y > gameObject.transform.position.y)
 		{
+
 			Ray ray = new Ray(transform.position, Vector3.up);
 			if(Physics.Raycast(ray, out hit, 1))
 			{
@@ -108,6 +115,7 @@ public class HunterEnemy : MonoBehaviour {
 			}
 			else
 			{
+				gameObject.transform.rotation = Quaternion.Euler(0f,-360f,99f);
 				transform.position = transform.position + new Vector3 (0,1,0);
 				MoveSound();
 			}
@@ -152,14 +160,18 @@ public class HunterEnemy : MonoBehaviour {
 			// play sound
 			source.clip = hunterDeath;
 			source.Play();
-
+			//Debug.Log("dead hunter and potato");
 			ParticleSystem particle;
 			particle = Instantiate (explosion, transform.position, Quaternion.identity) as ParticleSystem;
 			particle.startColor = Color.green;
 			Destroy (particle.gameObject, 2f);
+			particle = Instantiate (explosion, transform.position, Quaternion.identity) as ParticleSystem;
+			particle.startColor = Color.red;
+			Destroy (particle.gameObject, 2f);
 
+			Destroy(obj);
 
-			Destroy(gameObject);
+			Destroy(gameObject,2f);
 			
 		}
 
@@ -179,7 +191,7 @@ public class HunterEnemy : MonoBehaviour {
 
 	void MoveSound()
 	{
-
+		//Debug.Log ("move roar");
 		source.clip = roar;
 		source.Play();
 		//AudioSource.PlayClipAtPoint (roar, savedPos);
