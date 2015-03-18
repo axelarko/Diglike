@@ -27,6 +27,7 @@ public class Block : MonoBehaviour {
 	public int epic;
 	public int legendary;
 
+
 	protected int playerdmg;
 
 	public Vector3 basePos;
