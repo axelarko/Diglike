@@ -21,8 +21,8 @@ public class PlayerCharacter : MonoBehaviour {
 
 
 	private int basePower = 10;
-	private int power;
-	private int baseHealth = 100000;
+	public int power;
+	private int baseHealth = 50;
 	private int health;
 
 	private float beat;
@@ -32,6 +32,11 @@ public class PlayerCharacter : MonoBehaviour {
 
 	public float leftBounds;
 	public float rightBounds;
+
+	public float critMulti = 1;
+	public int comboCounter;
+	public int totalPower;
+	public float comboTimer;
 	// Use this for initialization
 	void Start () 
 	{
@@ -44,12 +49,12 @@ public class PlayerCharacter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-
-		TempUpdate ();
+		CalculatePower ();
+		//TempUpdate ();
 		Moving ();
 		if (health <= 0)
 		{
-			Death ();
+			Death (gameObject.transform.position.y);
 		}
 	}
 
@@ -58,15 +63,27 @@ public class PlayerCharacter : MonoBehaviour {
 		BeatPulse ();
 	}
 
+	public void ResetCombo ()
+	{
+		comboCounter = 0;
+	}
 
-	void TempUpdate (){
+	void CalculatePower()
+	{
+		if (comboTimer <= 0)
+			ResetCombo ();
+		totalPower = Mathf.RoundToInt(power+(0.1f*comboCounter)+(critMulti*0.1f));
+	}
+
+
+	/*void TempUpdate (){
 		if(Input.GetKeyDown(KeyCode.P)){
 			AddToInvetory(Item.w);
 		}
 		if(Input.GetKeyDown(KeyCode.O)){
 			AddToInvetory(Item.e);
 		}
-	}
+	}*/
 
 
 	public void AddToInvetory(Item itemToAdd){
@@ -101,10 +118,10 @@ public class PlayerCharacter : MonoBehaviour {
 
 	}
 
-	void Death()
+	void Death(float depth)
 	{
-
-		manager.GameOver ();
+		depth *= -1;
+		manager.GameOver(depth);
 		AudioSource.PlayClipAtPoint (dead, new Vector3 (5, 1, 2));
 		ParticleSystem blood;
 		blood = Instantiate (particle, transform.position, Quaternion.identity) as ParticleSystem;
@@ -182,11 +199,16 @@ public class PlayerCharacter : MonoBehaviour {
 
 	void Digging(Block block)
 	{
-		if (canDig && digWindow > 0) {
-			block.OnStrike (this, power);
-			canDig = !canDig;
-		} else
+		if (canDig && digWindow > 0) 
 		{
+			comboCounter +=1;
+			comboTimer = 1f;
+			block.OnStrike (this, totalPower);
+			canDig = !canDig;
+		} 
+		else
+		{
+			ResetCombo();
 			block.critInterval = 0;
 			block.Flash();
 		}
@@ -225,11 +247,20 @@ public class PlayerCharacter : MonoBehaviour {
 	public void HealthUpdate(int value)
 	{
 		health -= value;
+		if (health > 50)
+		{
+			health = 50;
+		}
+		if (health < 0)
+		{
+			health = 0;
+		}
 		manager.PlayerHealth(health);
 	}
 
 	void BeatPulse()
 	{
+		comboTimer -= Time.deltaTime;
 		digWindow -= Time.deltaTime;
 		beat -= Time.deltaTime;
 		if (beat <= 0) 
@@ -260,6 +291,10 @@ public class PlayerCharacter : MonoBehaviour {
 				hit.transform.gameObject.GetComponent<Block>().Pulse();
 			}
 			//beat = 0.47625f;
+			if (comboTimer <= 0)
+			{
+				ResetCombo();
+			}
 			beat = 0.5f;
 			digWindow = beat/(1/3);
 
