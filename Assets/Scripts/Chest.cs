@@ -17,11 +17,11 @@ public class Chest : Block
 
 			if (health <= 0)
 			{
-				MinedOut ();
+				MinedOut (player);
 			}
 	}
 
-	protected override void MinedOut()
+	protected override void MinedOut(PlayerCharacter player)
 	{
 		ParticleSystem particle;
 		transform.position = basePos;
@@ -48,7 +48,7 @@ public class Chest : Block
 			reward.Initialize (0, 3); // rolls low tier quality
 		}
 		Destroy (gameObject);
-		base.MinedOut ();
+		base.MinedOut (player);
 	}
 	
 
