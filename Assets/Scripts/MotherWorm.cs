@@ -168,7 +168,7 @@ public class MotherWorm : MonoBehaviour {
 			foreach (Collider coll in hitColliders) {
 				if (coll.gameObject.tag == "Block") {
 
-					Destroy (coll.gameObject);
+					coll.gameObject.GetComponent<Block>().Destroyed();
 					source.clip = wormdig;
 					source.Play ();
 			

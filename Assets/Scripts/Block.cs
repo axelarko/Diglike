@@ -68,7 +68,7 @@ public class Block : MonoBehaviour {
 
 
 	public Vector3 goposition;
-	public GameObject PlayerListener;
+	public PlayerCharacter playerListener;
 
 
 	public MotherWorm MotherWormPrefab;
@@ -80,7 +80,7 @@ public class Block : MonoBehaviour {
 		playerdmg = 1;
 		basePos = this.transform.position;
 
-		PlayerListener = GameObject.Find ("Player");
+		playerListener = FindObjectOfType<PlayerCharacter> ();
 	}
 	
 	// Update is called once per frame
@@ -274,17 +274,19 @@ public class Block : MonoBehaviour {
 
 	public float PlayerPosition ()
 	{
+		if (playerListener != null) {
+			goposition = playerListener.transform.position; // - gameObject.transform.position;
 		
-		goposition = PlayerListener.GetComponent<Transform> ().position; // - gameObject.transform.position;
+			float x1 = goposition.x;
+			float y1 = goposition.y;
 		
-		float x1 = goposition.x;
-		float y1 = goposition.y;
+			float x2 = gameObject.transform.position.x;
+			float y2 = gameObject.transform.position.y;
 		
-		float x2 = gameObject.transform.position.x;
-		float y2 = gameObject.transform.position.y;
+			volume = (1) / Mathf.Sqrt (Mathf.Pow (x2 - x1, 2) + Mathf.Pow (y2 - y1, 2));
 		
-		volume = (1) / Mathf.Sqrt(Mathf.Pow (x2 - x1, 2) + Mathf.Pow (y2 - y1, 2));
-		
+
+		} 
 		return volume;
 	}
 
