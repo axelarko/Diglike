@@ -26,8 +26,9 @@ public class PlayerCharacter : MonoBehaviour {
 	private int health;
 
 	private float beat;
+	private float digWindow;
 	public int pulse;
-	private bool canDig = false;
+	public bool canDig = false;
 
 	public float leftBounds;
 	public float rightBounds;
@@ -43,13 +44,18 @@ public class PlayerCharacter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		BeatPulse ();
+
 		TempUpdate ();
 		Moving ();
 		if (health <= 0)
 		{
 			Death ();
 		}
+	}
+
+	void FixedUpdate()
+	{
+		BeatPulse ();
 	}
 
 
@@ -172,11 +178,14 @@ public class PlayerCharacter : MonoBehaviour {
 
 	void Digging(Block block)
 	{
-		if (canDig) {
+		if (canDig && digWindow > 0) {
 			block.OnStrike (this, power);
 			canDig = !canDig;
 		} else
+		{
+			block.critInterval = 0;
 			block.Flash();
+		}
 	}
 
 	public void Falling()
@@ -217,6 +226,7 @@ public class PlayerCharacter : MonoBehaviour {
 
 	void BeatPulse()
 	{
+		digWindow -= Time.deltaTime;
 		beat -= Time.deltaTime;
 		if (beat <= 0) 
 		{
@@ -232,22 +242,22 @@ public class PlayerCharacter : MonoBehaviour {
 			ray2 = new Ray(transform.position,Vector3.right);
 			if(Physics.Raycast(ray, out hit, 1))
 			{
-				if (pulse >= 0)
-				{
-					hit.transform.gameObject.GetComponent<Block>().Pulse();
-				}
-
+				if (hit.transform.gameObject.CompareTag("Block"))
+				hit.transform.gameObject.GetComponent<Block>().Pulse();
 			}
 			if(Physics.Raycast(ray1, out hit, 1))
 			{
+				if (hit.transform.gameObject.CompareTag("Block"))
 				hit.transform.gameObject.GetComponent<Block>().Pulse();
 			}
 			if(Physics.Raycast(ray2, out hit, 1))
 			{
+				if (hit.transform.gameObject.CompareTag("Block"))
 				hit.transform.gameObject.GetComponent<Block>().Pulse();
 			}
 			//beat = 0.47625f;
 			beat = 0.5f;
+			digWindow = beat/(1/3);
 
 		}
 	}

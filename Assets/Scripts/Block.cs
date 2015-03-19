@@ -64,11 +64,23 @@ public class Block : MonoBehaviour {
 	//Time intervals for flashing and crits
 	public float flashTime;
 	public float critTime;
+
+
+
+	public Vector3 goposition;
+	public GameObject PlayerListener;
+
+
+	public MotherWorm MotherWormPrefab;
+	private MotherWorm go;
+
 	protected void Start () 
 	{
 
 		playerdmg = 1;
 		basePos = this.transform.position;
+
+		PlayerListener = GameObject.Find ("Player");
 	}
 	
 	// Update is called once per frame
@@ -76,12 +88,16 @@ public class Block : MonoBehaviour {
 	{
 		if (flashing)
 		{
-		timeInterval -= Time.deltaTime;
-		if (timeInterval >= 0) {
-			gameObject.GetComponent<MeshRenderer> ().material.color = Color.Lerp (baseColor, Color.red, timeInterval);
-		} else
-			flashing = false;
-		
+			timeInterval -= Time.deltaTime;
+			if (timeInterval >= 0) {
+				gameObject.GetComponent<MeshRenderer> ().material.color = Color.Lerp (baseColor, Color.red, timeInterval);
+			} 
+			else
+			{
+				flashing = false;
+				gameObject.GetComponent<MeshRenderer>().material.color = baseColor;
+			}
+			
 		}
 		if (critFlash)
 		{
@@ -89,9 +105,15 @@ public class Block : MonoBehaviour {
 			if (critInterval >= 0) {
 				gameObject.GetComponent<MeshRenderer> ().material.color = Color.Lerp (baseColor, Color.green, critInterval);
 				
-			} else
+			} 
+			else
+			{
 				critFlash = false;
+				gameObject.GetComponent<MeshRenderer>().material.color = baseColor;
+			}
 		}
+
+
 		if (shaking)
 		{
 			shakeTime -= Time.deltaTime;
@@ -107,6 +129,8 @@ public class Block : MonoBehaviour {
 		if ((-spawner.floorLevel)-30 >= level && spawner != null)
 			Destroy(gameObject);
 	}
+
+
 	public virtual void Initialize(int rarityFloor, int rarityCap)
 	{
 		if (spawner == null)
@@ -165,6 +189,7 @@ public class Block : MonoBehaviour {
 				CritSound ();
 				shakeForce = 2;
 				health -= damage*2;
+				player.HealthUpdate(playerdmg);
 			}
 			else
 			{
@@ -199,8 +224,18 @@ public class Block : MonoBehaviour {
 	}
 
 	protected void DigSound()
-	{
+	{/*
 		if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, gameObject.transform.position, volume);}
+		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, gameObject.transform.position, volume);}
+		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, gameObject.transform.position, volume);}
+		if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, gameObject.transform.position, volume);}*/
+
+		PlayerPosition ();
+		
+		if (blockID == 0) {
+			
+			
+			AudioSource.PlayClipAtPoint (earth, gameObject.transform.position,  volume);}
 		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, gameObject.transform.position, volume);}
 		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, gameObject.transform.position, volume);}
 		if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, gameObject.transform.position, volume);}
@@ -213,14 +248,21 @@ public class Block : MonoBehaviour {
 	protected void BreakSound()
 	{
 
-
+		/*
 		if (earth != null && stone1 != null && stone2 != null && metal != null)
 		{
 			if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
 			if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, new Vector3 (5, 1, 2));}
 			if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
 			if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
-		}
+		}*/
+
+		PlayerPosition ();
+		
+		if (blockID == 0) {AudioSource.PlayClipAtPoint (earthbreak, new Vector3 (5, 1, 2),volume);}
+		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1break, new Vector3 (5, 1, 2),volume);}
+		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2break, new Vector3 (5, 1, 2),volume);}
+		if (blockID == 3) {AudioSource.PlayClipAtPoint (metalbreak, new Vector3 (5, 1, 2),volume);}
 
 
 	}
@@ -228,6 +270,40 @@ public class Block : MonoBehaviour {
 	protected void PickUpSound()
 	{
 
+	}
+
+	public float PlayerPosition ()
+	{
+		
+		goposition = PlayerListener.GetComponent<Transform> ().position; // - gameObject.transform.position;
+		
+		float x1 = goposition.x;
+		float y1 = goposition.y;
+		
+		float x2 = gameObject.transform.position.x;
+		float y2 = gameObject.transform.position.y;
+		
+		volume = (1) / Mathf.Sqrt(Mathf.Pow (x2 - x1, 2) + Mathf.Pow (y2 - y1, 2));
+		
+		return volume;
+	}
+
+	public void RiskOfWorm()
+	{
+		int wormbingo = Random.Range (0, 15);
+		if (wormbingo == 1) 
+		{
+			Debug.Log("Bingo");
+			
+			if (go  != null)
+			{
+				Destroy(go);
+				
+			}
+			
+			go = Instantiate(MotherWormPrefab, new Vector3 (-99f, 112f, 99f),transform.rotation) as MotherWorm;
+			go.GetComponent<MotherWorm> ().Bingo( gameObject.transform.position);
+		}
 	}
 
 	protected virtual void MinedOut()
@@ -249,6 +325,7 @@ public class Block : MonoBehaviour {
 			// rolls quality
 			reward.Initialize (0, 3);
 		}
+		RiskOfWorm ();
 		BreakSound ();
 		Destroy (gameObject);
 	}
@@ -304,5 +381,6 @@ public class Block : MonoBehaviour {
 			spawner.LevelUp(player.level+1);
 		}
 		player.transform.position = gameObject.transform.position;
+
 	}
 }

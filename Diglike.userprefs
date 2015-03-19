@@ -1,9 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Block.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MotherWorm.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerCharacter.cs" Line="168" Column="18" />
-      <File FileName="Assets\Scripts\Block.cs" Line="193" Column="13" />
+      <File FileName="Assets\Scripts\MotherWorm.cs" Line="120" Column="21" />
+      <File FileName="Assets\Scripts\PlayerCharacter.cs" Line="174" Column="18" />
+      <File FileName="Assets\Scripts\BlockSpawner.cs" Line="75" Column="22" />
+      <File FileName="Assets\Scripts\Block.cs" Line="304" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

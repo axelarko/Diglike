@@ -67,9 +67,18 @@ public class BlockSpawner : MonoBehaviour {
 		floorLevel -= 1;
 		spawnPoint = this.transform.position + new Vector3 (0, (floorLevel), 0);
 	}
-	void CreateBlock()
+	public void CreateBlock(Vector3 location)
 	{
-
+		Block block;
+		block = Instantiate (blockPrefab, (location), Quaternion.identity) as Block;
+		/*block.posY = -(floorLevel)+1;
+		block.posX = i-1;*/
+		block.level = -(floorLevel)+1;
+		block.rarityFloor = minRarity;
+		block.rarityCap = maxRarity;
+		//spawnPoint = block.transform.position;
+		block.spawner = this;
+		block.Initialize(minRarity, maxRarity);
 	}
 
 	public void CreateAir(int x, int y)

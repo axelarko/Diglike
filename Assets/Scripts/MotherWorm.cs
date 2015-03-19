@@ -22,6 +22,8 @@ public class MotherWorm : MonoBehaviour {
 	public AudioClip wormdig;
 	public AudioClip Warning;
 		
+	BlockSpawner spawner;
+
 	public void Bingo (Vector3 plats)
 	{
 		dorment = false;
@@ -32,6 +34,7 @@ public class MotherWorm : MonoBehaviour {
 
 	void Start () 
 		{
+		//	spawner = FindObjectOfType<BlockSpawner>();
 			moving = true;
 			//Invoke ("WallOff", 0f);
 			player = FindObjectOfType<PlayerCharacter>();
@@ -41,6 +44,10 @@ public class MotherWorm : MonoBehaviour {
 		// Update is called once per frame
 		void FixedUpdate () 
 		{
+		if (moveCount <= 0)
+		{
+			Destroy (gameObject);
+		}
 		if (dorment == false) {
 			DestroyBlock ();
 			if (Input.GetKeyDown (KeyCode.Space)) {
@@ -89,6 +96,7 @@ public class MotherWorm : MonoBehaviour {
 			
 		wallPosition = player.transform.position + new Vector3(30 * (float)direction  ,-1*(float)stepdown  ,0);
 			{
+
 				gameObject.transform.position = wallPosition;
 			}
 			rising = !rising;
@@ -100,18 +108,19 @@ public class MotherWorm : MonoBehaviour {
 			moving = true;
 			if (moving && moveCount > 0) {
 				
-			GameObject goblock = Instantiate(blockSpawn,  (gameObject.transform.position - new Vector3(6f * (float)digDirection , 0f, 0f)),transform.rotation) as GameObject;
+			//GameObject goblock = Instantiate(blockSpawn,  (gameObject.transform.position - new Vector3(6f * (float)digDirection , 0f, 0f)),transform.rotation) as GameObject;
+			//spawner.CreateBlock(gameObject.transform.position); //- new Vector3(6f * (float)digDirection , 0f, 0f));
 
-			Block goScript = goblock.GetComponent<Block> ();
+			//Block goScript = goblock.GetComponent<Block> ();
 
 			//goblock.GetComponent<MeshRenderer> ().material.color = Color.Lerp (baseColor, Color.red, timeInterval);
-			goScript.blockID = 0;
-			GameObject go = GameObject.Find ("BlockSpawner");
-			if (go != null)
+			//goScript.blockID = 0;
+			//GameObject go = GameObject.Find ("BlockSpawner");
+			/*if (go != null)
 				goScript.spawner = go.GetComponent<BlockSpawner>();
 			else 
 				print("Couldn't find BlockSpawner");
-
+*/
 			transform.position = transform.position + (new Vector3 ( (float)digDirection, 0, 0));
 
 
@@ -217,5 +226,8 @@ public class MotherWorm : MonoBehaviour {
 		{
 			
 		}
+
+
+
 
 }
