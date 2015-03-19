@@ -32,10 +32,13 @@ public class PlayerCharacter : MonoBehaviour {
 
 	public float leftBounds;
 	public float rightBounds;
+
+
 	// Use this for initialization
 	void Start () 
 	{
-		gameObject.GetComponent<MeshRenderer> ().material.color = Color.yellow;
+
+		//gameObject.GetComponent<MeshRenderer> ().material.color = Color.yellow;
 		power = basePower;
 		health = baseHealth;
 		HealthUpdate (0);
@@ -125,6 +128,7 @@ public class PlayerCharacter : MonoBehaviour {
 				CheckTarget(hit.transform.gameObject);
 			}
 			else
+
 				transform.position = transform.position + new Vector3 (-1,0,0);
 		}
 		else if (Input.GetButtonDown("Right") && !falling && gameObject.transform.position.x != rightBounds)

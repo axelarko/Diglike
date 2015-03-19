@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\SwapperEnemy.cs" />
      <Compile Include="Assets\Scripts\TailEnemy.cs" />
      <Compile Include="Assets\Scripts\Treasure.cs" />
+     <Compile Include="Assets\mole\Animation_mole.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
