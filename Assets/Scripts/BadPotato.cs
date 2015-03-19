@@ -8,7 +8,7 @@ public class BadPotato : MonoBehaviour {
 	public Vector3 position;
 	public float sphereradius = 5;
 	public float growthscale = 0.1F;
-	
+	public bool doomed = false;
 	
 	public AudioSource source;
 	public AudioClip blirArg;
@@ -36,21 +36,24 @@ public class BadPotato : MonoBehaviour {
 		
 		//Destroy(other.gameObject);
 		
-		if (other.CompareTag ("Block") && angry) {
+		if (other.CompareTag ("Block") && angry ) {
 			other.GetComponent<Block> ().Destroyed ();
 		}
 		
-		if (other.CompareTag ("Player") && angry) {
+		if (other.CompareTag ("Player") && angry && doomed ) {
 			other.GetComponent<PlayerCharacter> ().HealthUpdate(9999999);
+
+
 		}
 		
-		if (other.CompareTag ("Player") != angry) 
+		if (other.CompareTag ("Player") != angry && doomed == false) 
 		{
-			int angrychanse = Random.Range(5,26);
+			int angrychanse = Random.Range(10,25);
 			int healing;
 			
 			healing = Mathf.RoundToInt (gameObject.transform.position.y - 50);
 			other.GetComponent<PlayerCharacter> ().HealthUpdate(healing);
+
 			
 			if(angrychanse != 13)
 			{
@@ -60,6 +63,10 @@ public class BadPotato : MonoBehaviour {
 				Destroy (particle.gameObject, 2f);
 				source.clip = Dör;
 				source.Play ();
+
+
+				Destroy(gameObject,0.2f);
+				doomed = true;
 				
 			}
 			
@@ -67,21 +74,29 @@ public class BadPotato : MonoBehaviour {
 			
 			if(angrychanse == 13)
 			{
-				
-				
-				source.clip = blirArg;
-				source.Play ();
-				ParticleSystem particle;
-				particle = Instantiate (explosion, transform.position, Quaternion.identity) as ParticleSystem;
-				particle.startColor = Color.black;
-				Destroy (particle.gameObject, 2f);
-				Invoke("Anger",2f);
+				doomed = true;
+				InvokeRepeating("BlackDeath",0f, 1f);
+
+
+
+				Invoke("HeIsMadNow",4f);
 			}
 			
 		}
 		
 	}
 	
+	public void BlackDeath()
+	
+	{
+		source.clip = blirArg;
+		source.Play ();
+		ParticleSystem particle;
+		particle = Instantiate (explosion, transform.position, Quaternion.identity) as ParticleSystem;
+		particle.startColor = Color.black;
+		Destroy (particle.gameObject, 2f);
+	}
+
 	public void Anger()
 	{
 		transform.localScale += new Vector3(growthscale, growthscale, growthscale);
@@ -106,13 +121,16 @@ public class BadPotato : MonoBehaviour {
 		howBig++;
 		if (howBig >= tobig) 
 		{
-			Destroy(gameObject);
+			source.clip = Dör;
+			source.Play();
+			Destroy(gameObject,0.2f);
 			//bam
 		}
 	}
 	
 	public void HeIsMadNow()
 	{
+
 		angry = true;
 	}
 }

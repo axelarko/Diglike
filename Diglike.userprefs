@@ -1,11 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MotherWorm.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BadPotato.cs">
     <Files>
-      <File FileName="Assets\Scripts\MotherWorm.cs" Line="120" Column="21" />
-      <File FileName="Assets\Scripts\PlayerCharacter.cs" Line="174" Column="18" />
-      <File FileName="Assets\Scripts\BlockSpawner.cs" Line="75" Column="22" />
-      <File FileName="Assets\Scripts\Block.cs" Line="304" Column="1" />
+      <File FileName="Assets\Scripts\PlayerCharacter.cs" Line="178" Column="48" />
+      <File FileName="Assets\Scripts\MotherWorm.cs" Line="169" Column="28" />
+      <File FileName="Assets\Scripts\BlockSpawner.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Block.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\BadPotato.cs" Line="66" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

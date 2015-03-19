@@ -173,6 +173,10 @@ public class PlayerCharacter : MonoBehaviour {
 			chest = obj.GetComponent<Chest>();
 			chest.OnStrike(this, 1);
 		}
+		else if (obj.tag.Equals("Potato"))
+		{
+			transform.position = obj.transform.position;
+		}
 	}
 		
 
