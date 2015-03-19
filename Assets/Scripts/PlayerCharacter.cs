@@ -28,6 +28,9 @@ public class PlayerCharacter : MonoBehaviour {
 	private float beat;
 	public int pulse;
 	private bool canDig = false;
+
+	public float leftBounds;
+	public float rightBounds;
 	// Use this for initialization
 	void Start () 
 	{
@@ -108,7 +111,7 @@ public class PlayerCharacter : MonoBehaviour {
 
 	void Moving ()
 	{
-		if (Input.GetButtonDown("Left") && !falling)
+		if (Input.GetButtonDown("Left") && !falling && gameObject.transform.position.x != leftBounds)
 		{
 			Ray ray = new Ray(transform.position, Vector3.left);
 			if(Physics.Raycast(ray, out hit, 1))
@@ -118,7 +121,7 @@ public class PlayerCharacter : MonoBehaviour {
 			else
 				transform.position = transform.position + new Vector3 (-1,0,0);
 		}
-		else if (Input.GetButtonDown("Right") && !falling)
+		else if (Input.GetButtonDown("Right") && !falling && gameObject.transform.position.x != rightBounds)
 		{
 			{
 				Ray ray = new Ray(transform.position, Vector3.right);
@@ -141,7 +144,7 @@ public class PlayerCharacter : MonoBehaviour {
 		Falling ();
 	}
 	
-	void CheckTarget(GameObject obj)
+	public void CheckTarget(GameObject obj)
 	{
 		if (obj.tag.Equals("Block"))
 		{
@@ -169,11 +172,11 @@ public class PlayerCharacter : MonoBehaviour {
 
 	void Digging(Block block)
 	{
-		if (canDig) 
-		{
+		if (canDig) {
 			block.OnStrike (this, power);
 			canDig = !canDig;
-		}
+		} else
+			block.Flash();
 	}
 
 	public void Falling()
@@ -231,41 +234,21 @@ public class PlayerCharacter : MonoBehaviour {
 			{
 				if (pulse >= 0)
 				{
-					hit.transform.gameObject.GetComponent<Block>().Pulse("green");
+					hit.transform.gameObject.GetComponent<Block>().Pulse();
 				}
-				else
-				{
-					hit.transform.gameObject.GetComponent<Block>().Pulse("red");
-				}
+
 			}
 			if(Physics.Raycast(ray1, out hit, 1))
 			{
-				if (pulse >= 0)
-				{
-					hit.transform.gameObject.GetComponent<Block>().Pulse("green");
-				}
-				else
-				{
-					hit.transform.gameObject.GetComponent<Block>().Pulse("red");
-				}
+				hit.transform.gameObject.GetComponent<Block>().Pulse();
 			}
 			if(Physics.Raycast(ray2, out hit, 1))
 			{
-				if (pulse >= 0)
-				{
-					hit.transform.gameObject.GetComponent<Block>().Pulse("green");
-				}
-				else
-				{
-					hit.transform.gameObject.GetComponent<Block>().Pulse("red");
-				}
+				hit.transform.gameObject.GetComponent<Block>().Pulse();
 			}
-			pulse -=1;
-			beat = 0.47625f;
-			if (pulse < -1)
-			{
-				pulse = 2;
-			}
+			//beat = 0.47625f;
+			beat = 0.5f;
+
 		}
 	}
 

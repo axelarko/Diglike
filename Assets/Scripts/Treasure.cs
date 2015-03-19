@@ -32,6 +32,10 @@ public class Treasure : Block {
 			treasureType = "Potion";
 			value = 10;
 
+		{
+			FindPlayer();
+		}
+
 	}
 
 	public void PickUp(PlayerCharacter player)
@@ -43,10 +47,23 @@ public class Treasure : Block {
 		player.PickUp (treasureType, value);
 		Destroy (gameObject);
 	} 
-	else {
+	else 
+	{
 		player.AddToInvetory(item);
-
-
 	}
-}
+	}
+
+	void FindPlayer()
+	{
+		{
+			PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+
+			if (player != null)
+			{
+				player.CheckTarget(gameObject);
+			}
+
+		}
+	}
+
 }

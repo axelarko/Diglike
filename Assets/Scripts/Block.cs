@@ -13,9 +13,9 @@ public class Block : MonoBehaviour {
 	public AudioClip metalbreak;
 	public AudioClip crit;
 	public AudioClip fail;
-	public float volume;
-	public GameObject MotherWormPrefab;
-	private GameObject go;
+	public float volume = 0.5f;
+
+
 	public int health;
 	public float maxHealth;
 	public int armor;
@@ -26,7 +26,6 @@ public class Block : MonoBehaviour {
 	public int rare;
 	public int epic;
 	public int legendary;
-
 
 	protected int playerdmg;
 
@@ -65,30 +64,11 @@ public class Block : MonoBehaviour {
 	//Time intervals for flashing and crits
 	public float flashTime;
 	public float critTime;
-	public Vector3 goposition;
-	public GameObject PlayerListener;
 	protected void Start () 
 	{
 
-		PlayerListener = GameObject.Find ("Player");
 		playerdmg = 1;
 		basePos = this.transform.position;
-	}
-	
-	public float PlayerPosition ()
-	{
-
-		goposition = PlayerListener.GetComponent<Transform> ().position; // - gameObject.transform.position;
-		
-		float x1 = goposition.x;
-		float y1 = goposition.y;
-		
-		float x2 = gameObject.transform.position.x;
-		float y2 = gameObject.transform.position.y;
-		
-		volume = (1) / Mathf.Sqrt(Mathf.Pow (x2 - x1, 2) + Mathf.Pow (y2 - y1, 2));
-
-		return volume;
 	}
 	
 	// Update is called once per frame
@@ -202,7 +182,7 @@ public class Block : MonoBehaviour {
 			else
 			{
 				DigSound();
-				Flash ();
+				//Flash ();
 			}
 		}
 		else
@@ -210,6 +190,7 @@ public class Block : MonoBehaviour {
 			FailSound ();
 			int dmg = playerdmg * 2;
 			player.HealthUpdate	 (dmg);
+			Flash ();
 		}
 	}
 	protected void FailSound()
@@ -219,18 +200,10 @@ public class Block : MonoBehaviour {
 
 	protected void DigSound()
 	{
-		PlayerPosition ();
-
-		if (blockID == 0) {
-
-
-			AudioSource.PlayClipAtPoint (earth, gameObject.transform.position,  volume);}
+		if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, gameObject.transform.position, volume);}
 		if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, gameObject.transform.position, volume);}
 		if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, gameObject.transform.position, volume);}
 		if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, gameObject.transform.position, volume);}
-
-
-	
 	}
 	protected void CritSound()
 	{
@@ -243,14 +216,10 @@ public class Block : MonoBehaviour {
 
 		if (earth != null && stone1 != null && stone2 != null && metal != null)
 		{
-			PlayerPosition ();
-
-			if (blockID == 0) {AudioSource.PlayClipAtPoint (earthbreak, new Vector3 (5, 1, 2),volume);}
-			if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1break, new Vector3 (5, 1, 2),volume);}
-			if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2break, new Vector3 (5, 1, 2),volume);}
-			if (blockID == 3) {AudioSource.PlayClipAtPoint (metalbreak, new Vector3 (5, 1, 2),volume);}
-
-
+			if (blockID == 0) {AudioSource.PlayClipAtPoint (earth, new Vector3 (5, 1, 2));}
+			if (blockID == 1) {AudioSource.PlayClipAtPoint (stone1, new Vector3 (5, 1, 2));}
+			if (blockID == 2) {AudioSource.PlayClipAtPoint (stone2, new Vector3 (5, 1, 2));}
+			if (blockID == 3) {AudioSource.PlayClipAtPoint (metal, new Vector3 (5, 1, 2));}
 		}
 
 
@@ -299,12 +268,11 @@ public class Block : MonoBehaviour {
 
 
 
-	protected virtual void Flash()
+	public virtual void Flash()
 	{
-		/*Invoke ("CriticalFlash", flashTime);
 		timeInterval = flashTime;
 		if (!flashing)
-		flashing = !flashing;*/
+		flashing = !flashing;
 	}
 
 	protected void CriticalFlash()
@@ -314,38 +282,20 @@ public class Block : MonoBehaviour {
 		critFlash = !critFlash;
 	}
 
-	public void riskOfWorm()
+	public void Pulse()
 	{
-		int wormbingo = Random.Range (0, 15);
-		if (wormbingo == 1) 
-		{
-			Debug.Log("Bingo");
-
-			if (go  != null)
-			{ 
-				Destroy(go);
-
-			}
-
-		  go = Instantiate(MotherWormPrefab, new Vector3 (-99f, 112f, 99f),transform.rotation) as GameObject;
-			go.GetComponent<MotherWorm> ().Bingo( gameObject.transform.position);
-		}
-	}
-
-	public void Pulse(string color)
-	{
-		if (color == "green")
+		if (!flashing)
 		{
 			critInterval = critTime;
 			if (!critFlash)
 			critFlash = !critFlash;
 		}
-		else
+	/*	else
 		{
 			timeInterval = flashTime;
 			if (!flashing)
 			flashing = !flashing;
-		}
+		}*/
 	}
 	void MovePlayerHere(PlayerCharacter player)
 	{
@@ -354,6 +304,5 @@ public class Block : MonoBehaviour {
 			spawner.LevelUp(player.level+1);
 		}
 		player.transform.position = gameObject.transform.position;
-		riskOfWorm ();
 	}
 }
