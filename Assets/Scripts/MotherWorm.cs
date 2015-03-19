@@ -155,20 +155,22 @@ public class MotherWorm : MonoBehaviour {
 		void DestroyBlock()
 		{
 			{
-				hitColliders = Physics.OverlapSphere(transform.position, 0f);
-				foreach (Collider coll in hitColliders)
-				if (coll.gameObject.tag == "Block" ||coll.gameObject.tag == "Player"  )
-				{
+			hitColliders = Physics.OverlapSphere (transform.position, 0f);
+			foreach (Collider coll in hitColliders) {
+				if (coll.gameObject.tag == "Block") {
 
-				Destroy(coll.gameObject);
-				source.clip = wormdig;
-				source.Play();
+					Destroy (coll.gameObject);
+					source.clip = wormdig;
+					source.Play ();
+			
+				}
+				if (coll.gameObject.tag == "Player") {
 
-
-
+					coll.GetComponent<PlayerCharacter> ().HealthUpdate(9999999);
 
 				}
 			}
+		}
 		}
 		
 
