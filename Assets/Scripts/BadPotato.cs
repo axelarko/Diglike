@@ -17,19 +17,18 @@ public class BadPotato : MonoBehaviour {
 	public ParticleSystem explosion;
 	
 	// Use this for initialization
-	/*void Start () {
+	void Start () {
 		
-	}*/
+	}
 	
 	// Update is called once per frame
-	 void Update () 
+	void Update () 
 	{
 		
 		
 		if (angry == true) {
 			Anger ();
 		}
-
 	}
 	
 	void OnTriggerEnter(Collider other) 

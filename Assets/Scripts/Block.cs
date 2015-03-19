@@ -74,8 +74,6 @@ public class Block : MonoBehaviour {
 	public MotherWorm MotherWormPrefab;
 	private MotherWorm go;
 
-	public BadPotato potatoPrefab;
-
 	protected void Start () 
 	{
 
@@ -86,7 +84,7 @@ public class Block : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	protected virtual void Update () 
+	protected void Update () 
 	{
 		if (flashing)
 		{
@@ -160,24 +158,18 @@ public class Block : MonoBehaviour {
 		}
 			else if (blockType < legendary && epic < blockType) 
 			{
-			BadPotato potatoman;
-			potatoman = Instantiate (potatoPrefab, transform.position,Quaternion.identity) as BadPotato;
-			potatoman.transform.Rotate(Vector3.up, 180);
-			Destroy (gameObject);
-				/*blockID = 4;
+				blockID = 4;
 				baseColor = gameObject.GetComponent<Renderer>().material.color = Color.yellow;
-				*/
 			}
 			else if (legendary < blockType) 
 			{
-				blockID = 5;
+				blockID = 4;
 				baseColor = gameObject.GetComponent<Renderer>().material.color = Color.green;
-				baseDrop = 100;
 			}
 
 		else if (blockType == 0) 
 		{
-			blockID = 0;
+			blockID = 4;
 			gameObject.GetComponent<MeshRenderer>().enabled = false;
 			gameObject.GetComponent<BoxCollider>().enabled = false;
 		}
@@ -209,7 +201,7 @@ public class Block : MonoBehaviour {
 			if (health <= 0)
 			{
 				BreakSound ();
-				MinedOut (player);
+				MinedOut ();
 				MovePlayerHere(player);
 			}
 			else
@@ -220,7 +212,6 @@ public class Block : MonoBehaviour {
 		}
 		else
 		{
-			player.ResetCombo();
 			FailSound ();
 			int dmg = playerdmg * 2;
 			player.HealthUpdate	 (dmg);
@@ -301,10 +292,8 @@ public class Block : MonoBehaviour {
 
 	public void RiskOfWorm()
 	{
-		int increasingRate = Mathf.RoundToInt(playerListener.transform.position.y*-0.1f);
-		Debug.Log (increasingRate);
-		int wormbingo = Random.Range (0, 10-increasingRate);
-		if (wormbingo <= 0) 
+		int wormbingo = Random.Range (0, 15);
+		if (wormbingo == 1) 
 		{
 			Debug.Log("Bingo");
 			
@@ -319,7 +308,7 @@ public class Block : MonoBehaviour {
 		}
 	}
 
-	protected virtual void MinedOut(PlayerCharacter player)
+	protected virtual void MinedOut()
 	{
 		transform.position = basePos;
 		ParticleSystem particle;
@@ -328,8 +317,7 @@ public class Block : MonoBehaviour {
 		Destroy (particle.gameObject, 2f);
 		spawner.airSpawn = this.transform.position;
 		spawner.CreateAir (posX, posY);
-		BlockReward (player);
-		/*int dropchance = Random.Range (0, 101);
+		int dropchance = Random.Range (0, 101);
 		if (dropchance <= itemRate)
 		{
 			Treasure reward;
@@ -338,29 +326,10 @@ public class Block : MonoBehaviour {
 			reward.level = level;
 			// rolls quality
 			reward.Initialize (0, 3);
-		}*/
+		}
 		RiskOfWorm ();
 		BreakSound ();
 		Destroy (gameObject);
-	}
-
-	void BlockReward(PlayerCharacter player)
-	{
-		if (blockID == 3)
-		{
-			Debug.Log ("crit up!");
-			player.critMulti += (level * 0.1f);
-		}
-		else if (blockID == 4)
-		{
-			Debug.Log ("Healed! " + Mathf.RoundToInt(10f));
-			player.HealthUpdate(-(Mathf.RoundToInt(10f)));
-		}
-		else if (blockID == 5)
-		{
-			Debug.Log("Power up");
-			player.power += 1;
-		}
 	}
 
 	public void Destroyed()

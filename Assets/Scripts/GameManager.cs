@@ -5,7 +5,6 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 	public int playerHealth;
 	public Text healthText;
-	private float depth;
 	// Use this for initialization
 	void Start () 
 	{
@@ -23,15 +22,14 @@ public class GameManager : MonoBehaviour {
 		healthText.text = health.ToString();
 	}
 
-	public void GameOver(float playerdepth)
+	public void GameOver()
 	{
-		depth = playerdepth;
 		Invoke ("EndScreen", 5f);
 	}
 
 	void EndScreen()
 	{
-		Debug.Log ("You dug " + depth + " meters before dying horribly. :(");
+		Debug.Log (":(");
 		//Game Over screen
 	}
 }

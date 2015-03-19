@@ -19,7 +19,7 @@ public class Treasure : Block {
 		else if (treasureID == 2)
 			treasureType = "Screaming Screwdriver of Offended Bears";
 		else if (treasureID == 3)
-			/*
+
 		{
 			treasureType = "Potion";
 			value = 10;
@@ -30,7 +30,7 @@ public class Treasure : Block {
 		}
 
 			treasureType = "Potion";
-			value = 10;*/
+			value = 10;
 
 		{
 			FindPlayer();

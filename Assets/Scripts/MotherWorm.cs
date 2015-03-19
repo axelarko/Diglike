@@ -169,8 +169,8 @@ public class MotherWorm : MonoBehaviour {
 				if (coll.gameObject.tag == "Block") {
 
 					coll.gameObject.GetComponent<Block>().Destroyed();
-				//	source.clip = wormdig;
-				//	source.Play ();
+					source.clip = wormdig;
+					source.Play ();
 			
 				}
 				if (coll.gameObject.tag == "Player") {
